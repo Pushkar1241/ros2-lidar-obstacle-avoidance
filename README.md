@@ -4,20 +4,22 @@
 
 This project implements a differential-drive mobile robot in Gazebo Harmonic using ROS 2 Humble and Python.
 
-A simulated GPU LiDAR provides distance measurements to a ROS 2 controller. The controller processes LaserScan data, detects nearby obstacles, and publishes velocity commands to navigate the simulated environment.
+A simulated GPU LiDAR provides distance measurements to a ROS 2 controller. The controller processes `LaserScan` data, detects nearby obstacles, and publishes velocity commands to navigate a simulated environment.
+
+The robot is tested in a multi-obstacle course, where it navigates from START toward FINISH and stops when its programmed goal condition is reached.
 
 ## Features
 
 - Custom differential-drive mobile robot
 - GPU LiDAR simulation
-- ROS 2 and Gazebo integration using `ros_gz_bridge`
-- LiDAR-based obstacle avoidance
-- Velocity control using `/cmd_vel`
-- Robot odometry using `/odom`
+- ROS 2–Gazebo integration using `ros_gz_bridge`
+- LiDAR-based obstacle detection and avoidance
+- Velocity control through `/cmd_vel`
+- Robot odometry through `/odom`
 - Multi-obstacle START-to-FINISH simulation
 - Goal detection and automatic stopping
 
-## Technologies
+## Technologies Used
 
 - ROS 2 Humble
 - Gazebo Harmonic
@@ -37,15 +39,42 @@ A simulated GPU LiDAR provides distance measurements to a ROS 2 controller. The 
 
 ## Project Structure
 
-- `my_lidar_demo/obstacle_avoidance.py` — obstacle avoidance controller
-- `worlds/lidar_test.sdf` — robot and obstacle-course simulation
-- `launch/lidar_demo.launch.py` — launches the simulation
-- `launch/lidar_tf.launch.py` — LiDAR transform launch configuration
-- `rviz/lidar.rviz` — RViz visualization configuration
+```text
+my_lidar_demo/
+├── launch/
+│   ├── lidar_demo.launch.py
+│   └── lidar_tf.launch.py
+├── my_lidar_demo/
+│   ├── __init__.py
+│   └── obstacle_avoidance.py
+├── resource/
+├── rviz/
+│   └── lidar.rviz
+├── test/
+├── worlds/
+│   └── lidar_test.sdf
+├── package.xml
+├── setup.cfg
+├── setup.py
+├── .gitignore
+└── README.md
+```
+
+## Prerequisites
+
+Ensure that the following are installed and configured:
+
+- Ubuntu 22.04
+- ROS 2 Humble
+- Gazebo Harmonic
+- Required ROS–Gazebo bridge packages
+- Colcon build tools
 
 ## How to Run
 
-Build the package:
+### 1. Build the package
+
+Open a terminal and run:
 
 ```bash
 cd ~/ros2_ws
@@ -54,32 +83,65 @@ colcon build --packages-select my_lidar_demo
 source ~/ros2_ws/install/setup.bash
 ```
 
-Start the simulation:
+### 2. Launch the simulation
 
 ```bash
+source /opt/ros/humble/setup.bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch my_lidar_demo lidar_demo.launch.py
 ```
 
-In a second terminal, start the controller:
+### 3. Start the obstacle avoidance controller
+
+Open a second terminal:
 
 ```bash
-cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source ~/ros2_ws/install/setup.bash
 ros2 run my_lidar_demo obstacle_avoidance
 ```
 
+### 4. Monitor ROS 2 topics
+
+To check the available topics:
+
+```bash
+ros2 topic list
+```
+
+To inspect LiDAR measurements:
+
+```bash
+ros2 topic echo /lidar
+```
+
+To inspect robot odometry:
+
+```bash
+ros2 topic echo /odom
+```
+
+*Note: These commands assume the simulation and required ROS 2 nodes are running and publishing on the listed topics.*
+
 ## Results
 
-The robot has been tested in a simulated multi-obstacle course. It uses LiDAR measurements to avoid obstacles and stops when its programmed goal condition is reached.
+The robot has been tested in a simulated multi-obstacle environment. It uses LiDAR distance measurements to detect nearby obstacles and adjust its motion through velocity commands. The controller also stops the robot when its programmed goal condition is reached.
+
+The current implementation provides a foundation for further development of autonomous mobile robot navigation.
 
 ## Future Improvements
 
 - Goal-directed path planning
-- Improved obstacle avoidance
-- Quantitative navigation performance evaluation
-- Integration with ROS 2 navigation tools
+- Improved obstacle avoidance and recovery behavior
+- Quantitative evaluation of navigation performance
+- Integration with the ROS 2 Navigation stack (Nav2)
+- Testing under different obstacle configurations and simulation conditions
 
 ## Author
 
-Pushkar Suryavanshi
+**Pushkar Suryavanshi**
+
+## Repository
+
+[GitHub – ROS 2 LiDAR Obstacle Avoidance](https://github.com/Pushkar1241/ros2-lidar-obstacle-avoidance)
+
