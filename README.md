@@ -72,7 +72,7 @@ Ensure that the following are installed and configured:
 
 ## How to Run
 
-### 1. Build the package
+### 1. Build the Package
 
 Open a terminal and run:
 
@@ -83,7 +83,7 @@ colcon build --packages-select my_lidar_demo
 source ~/ros2_ws/install/setup.bash
 ```
 
-### 2. Launch the simulation
+### 2. Launch the Simulation
 
 ```bash
 source /opt/ros/humble/setup.bash
@@ -91,9 +91,11 @@ source ~/ros2_ws/install/setup.bash
 ros2 launch my_lidar_demo lidar_demo.launch.py
 ```
 
-### 3. Start the obstacle avoidance controller
+Keep this terminal running while the simulation is active.
 
-Open a second terminal:
+### 3. Start the Obstacle Avoidance Controller
+
+Open a second terminal and run:
 
 ```bash
 source /opt/ros/humble/setup.bash
@@ -101,7 +103,7 @@ source ~/ros2_ws/install/setup.bash
 ros2 run my_lidar_demo obstacle_avoidance
 ```
 
-### 4. Monitor ROS 2 topics
+### 4. Monitor ROS 2 Topics
 
 To check the available topics:
 
@@ -144,4 +146,3 @@ The current implementation provides a foundation for further development of auto
 ## Repository
 
 [GitHub – ROS 2 LiDAR Obstacle Avoidance](https://github.com/Pushkar1241/ros2-lidar-obstacle-avoidance)
-
